@@ -1,0 +1,34 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { AuthUser } from './authUser.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+  private token:string;
+
+  constructor(private http:HttpClient) { }
+
+  getToken(){
+    return this.token;
+  }
+
+  createUser(email:string,password:string){
+    const authData:AuthUser={email:email,password:password};
+    this.http.post('http://localhost:3000/api/user/signup',authData)
+    .subscribe(response=>{
+      console.log(response);
+    })
+  }
+
+  loginUser(email:string,password:string){
+    const authData={email:email,password:password};
+    this.http.post<{token:string}>('http://localhost:3000/api/user/login',authData)
+    .subscribe(result=>{
+      const token=result.token;
+      this.token=token;
+      console.log(this.token);
+    })
+  }
+}
