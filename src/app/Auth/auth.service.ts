@@ -1,17 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AuthUser } from './authUser.model';
+import { BehaviorSubject} from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private token:string;
+  //private authenticationStatus=new Subject<boolean>();
+  private authenticationStatus=new BehaviorSubject<boolean>(false);
 
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient,private router:Router) { }
 
   getToken(){
     return this.token;
+  }
+
+  getAuthStatus(){
+    return this.authenticationStatus.asObservable();
   }
 
   createUser(email:string,password:string){
@@ -29,6 +37,14 @@ export class AuthService {
       const token=result.token;
       this.token=token;
       console.log(this.token);
+      this.authenticationStatus.next(true);
+      this.router.navigate(['/']);
     })
+  }
+
+  logoutUser(){
+    this.token=null;
+    this.authenticationStatus.next(false);
+    this.router.navigate(['/']);
   }
 }
