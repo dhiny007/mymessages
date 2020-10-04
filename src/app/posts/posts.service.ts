@@ -27,7 +27,8 @@ export class PostsService{
                 title:post.title,
                 content:post.content,
                 id:post._id,
-                imagePath:post.imagePath
+                imagePath:post.imagePath,
+                creator:post.creator
               };
             }
           ),
@@ -48,11 +49,11 @@ export class PostsService{
 
   getPost(id:string){
     // return {...this.posts.find(pId => pId.id ===id)};
-    return this.http.get<{_id:string;title:string;content:string,imagePath:string}>('http://localhost:3000/api/posts/' + id);
+    return this.http.get<{_id:string;title:string;content:string,imagePath:string,creator:string}>('http://localhost:3000/api/posts/' + id);
   }
 
   addPosts(title:string,content:string,image:File){
-    console.log(title,content);
+    //console.log(title,content);
     //const post: Post = {id:null,title:title,content:content};
     const postData=new FormData();
     postData.append('title',title);
@@ -75,7 +76,7 @@ export class PostsService{
       postData.append('image',image,title);
     }
     else{
-      postData= {id:id,title:title,content:content,imagePath:null};
+      postData= {id:id,title:title,content:content,imagePath:image,creator:null};
     }
     this.http.put('http://localhost:3000/api/posts/' + id,postData).subscribe(
       response => {

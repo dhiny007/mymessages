@@ -4,7 +4,7 @@ import { LoginComponent } from './Auth/login/login.component';
 import { SignupComponent } from './Auth/signup/signup.component';
 import { PostListComponent } from './posts/post-list/post-list.component';
 import { PostsComponent } from './posts/posts.component';
-import { AuthGuard } from './Auth/auth.guard';
+import { AuthGuard } from './Auth/auth-guard.guard';
 
 const routes: Routes = [
   {path:'',component:PostListComponent},
@@ -16,7 +16,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers:[AuthGuard]
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }
