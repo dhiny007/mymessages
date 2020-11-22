@@ -61,7 +61,7 @@ export class PostsService{
     postData.append('image',image,title);
     this.http.post<{message:string,post:Post}>('http://localhost:3000/api/posts',postData).subscribe(
       responseData => {
-        this.router.navigate(['']);
+        this.router.navigate(['/postlist']);
       }
     )
   }
@@ -80,7 +80,7 @@ export class PostsService{
     }
     this.http.put('http://localhost:3000/api/posts/' + id,postData).subscribe(
       response => {
-        this.router.navigate(['']);
+        this.router.navigate(['/postlist']);
       }
     )
   }

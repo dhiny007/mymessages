@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit,OnDestroy {
   isLoading=false;
   private authSubs:Subscription;
 
-  constructor(private authService:AuthService) { }
+  constructor(private authService:AuthService,private router:Router,private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.authSubs=this.authService.getAuthStatus().subscribe(

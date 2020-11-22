@@ -19,6 +19,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { LoginComponent } from './Auth/login/login.component';
 import { SignupComponent } from './Auth/signup/signup.component';
+import { ErrorInterceptor } from './error-interceptor';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ErrorComponent } from './error/error.component';
 
 
 @NgModule({
@@ -29,6 +32,7 @@ import { SignupComponent } from './Auth/signup/signup.component';
     PostListComponent,
     LoginComponent,
     SignupComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
@@ -43,9 +47,14 @@ import { SignupComponent } from './Auth/signup/signup.component';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDialogModule
   ],
-  providers: [{provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true}],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide:HTTP_INTERCEPTORS,useClass:AuthInterceptor,multi:true},
+    {provide:HTTP_INTERCEPTORS,useClass:ErrorInterceptor,multi:true}
+  ],
+  bootstrap: [AppComponent],
+  entryComponents:[ErrorComponent]
 })
 export class AppModule { }

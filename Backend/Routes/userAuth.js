@@ -22,7 +22,7 @@ router.post('/signup',(req,res,next)=>{
     })
     .catch((err)=>{
       res.status(500).json({
-        error:err
+        message:'Email already registered!'
       })
     })
   })
@@ -42,7 +42,7 @@ router.post('/login',(req,res,next)=>{
   .then(result=>{
     if(!result){
       return res.status(401).json({
-        message:'Authentication failed!'
+        message:'Invalid Login Credentials!'
       });
     }
 
